@@ -12,7 +12,13 @@
 
   // builds after platform config
   function run(context) {
-    const preferences = configPreferences.read(context);
+    let preferences;
+    try {
+      preferences = configPreferences.read(context);
+    } catch (ohNo) {
+      console.error("Aww shucks, the plugin config ain't alright, gonna skip Branch my dude");
+      return;
+    }
     const platforms = context.opts.cordova.platforms;
 
     platforms.forEach(platform => {
